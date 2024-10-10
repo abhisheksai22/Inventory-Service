@@ -23,8 +23,8 @@ public class InventoryServiceImpl implements InventoryService{
     public InventoryResponse createInventory(InventoryRequest inv) {
         try {
             Inventory inventory = Inventory.builder()
-                    .email(inv.getEmail())
-                    .name(inv.getName())
+                    .quantity(inv.getQuantity())
+                    .skuCode(inv.getSkuCode())
                     .build();
             inventoryRepository.save(inventory);
             log.info("Inventory Saved with the id : {}", inventory.getInventoryId());
@@ -35,18 +35,11 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
 
-    Inventory createInventoryEntity(InventoryRequest inv){
-        return Inventory.builder()
-                .email(inv.getEmail())
-                .name(inv.getName())
-                .build();
-    }
-
-    InventoryResponse createInventoryResponse(Inventory inventory){
-        return  InventoryResponse.builder()
-                .email(inventory.getEmail())
+    private InventoryResponse createInventoryResponse(Inventory inventory) {
+        return InventoryResponse.builder()
                 .inventoryId(inventory.getInventoryId())
-                .name(inventory.getName())
+                .skuCode(inventory.getSkuCode())
+                .quantity(inventory.getQuantity())
                 .build();
     }
 

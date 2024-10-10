@@ -27,7 +27,7 @@ public class InventoryController {
 
     @PostMapping("/create")
     public ResponseEntity<APIResponse> createInventory(@RequestBody InventoryRequest inventoryRequest){
-            log.info("Inv in controller: {}", inventoryRequest.getEmail());
+            log.info("Inv in controller: {}", inventoryRequest.toString());
 
             InventoryResponse inventoryResponse = inventoryService.createInventory(inventoryRequest);
             APIResponse<InventoryResponse> inventoryResponseDto = APIResponse

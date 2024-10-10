@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InventoryRequest {
 
-    @JsonProperty
-    private String name;
-    @JsonProperty
-    private String email;
+    private String skuCode;
+    private Integer quantity;
 }

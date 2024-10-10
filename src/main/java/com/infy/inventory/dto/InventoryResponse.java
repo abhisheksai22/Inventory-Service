@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class InventoryResponse {
 
     private Long inventoryId;
-    private String name;
-    private String email;
+    private String skuCode;
+    private Integer quantity;
 }
