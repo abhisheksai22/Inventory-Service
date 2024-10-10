@@ -1,7 +1,11 @@
 package com.infy.inventory.service;
 
-import org.springframework.stereotype.Service;
+import com.infy.inventory.dto.InventoryRequest;
+import com.infy.inventory.dto.InventoryResponse;
+import com.infy.inventory.model.Inventory;
 
-@Service
 public interface InventoryService {
+
+    InventoryResponse createInventory(InventoryRequest inv);
+
 }
