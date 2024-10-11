@@ -1,19 +1,16 @@
 package com.infy.inventory.controller;
 
-import com.infy.inventory.InventoryApplication;
 import com.infy.inventory.dto.APIResponse;
 import com.infy.inventory.dto.InventoryRequest;
 import com.infy.inventory.dto.InventoryResponse;
-import com.infy.inventory.model.Inventory;
 import com.infy.inventory.service.impl.InventoryServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -25,7 +22,7 @@ public class InventoryController {
     @Autowired
     private InventoryServiceImpl inventoryService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<APIResponse> createInventory(@RequestBody InventoryRequest inventoryRequest){
             log.info("Inv in controller: {}", inventoryRequest.toString());
 
@@ -39,4 +36,21 @@ public class InventoryController {
 
     }
 
+    @GetMapping
+    public ResponseEntity<APIResponse> getAllInventory(){
+        log.info("Inventory Controller Get All");
+
+        List<InventoryResponse> listOfInventory = inventoryService.getAll();
+        APIResponse<List<InventoryResponse>> apiResponse = APIResponse
+                .<List<InventoryResponse>>builder()
+                .results(listOfInventory)
+                .status(SUCCESS)
+                .build();
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
+
+    @GetMapping("/sku-code")
+    public ResponseEntity<APIResponse> inStock(@PathVariable("sku-code") String skuCode){
+        boolean instock = inventoryService.inStock(skuCode);
+    }
 }
