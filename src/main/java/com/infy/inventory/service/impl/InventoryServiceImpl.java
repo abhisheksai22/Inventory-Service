@@ -53,13 +53,15 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public boolean inStock(String skuCode) {
         Optional<Inventory> isInventoryPresent = inventoryRepository.findBySkuCode(skuCode);
-        if(isInventoryPresent.isPresent()) {
-            return true;
+        if(isInventoryPresent.isEmpty()) {
+            throw new InventoryNotFoundException("No such Sku-Code is present : "+""+skuCode);
         } else {
-            return false;
+            Inventory inventory = isInventoryPresent.get();
+            return inventory.getQuantity() > 0;
         }
     }
 
