@@ -52,5 +52,10 @@ public class InventoryController {
     @GetMapping("/sku-code")
     public ResponseEntity<APIResponse> inStock(@PathVariable("sku-code") String skuCode){
         boolean instock = inventoryService.inStock(skuCode);
+        APIResponse apiResponse = APIResponse.builder()
+                .status(SUCCESS)
+                .results(instock)
+                .build();
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 }
